@@ -1,11 +1,8 @@
 (function() {
-  chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    return chrome.pageAction.show(tabId);
-  });
-
-  chrome.pageAction.onClicked.addListener(function() {
+  chrome.browserAction.onClicked.addListener(function() {
+    alert("韓国吸収！");
     return chrome.tabs.executeScript(null, {
-      "code": "document.body.style.backgroundColor = 'red'"
+      "code": "document.body.innerHTML = " + "document.body.innerHTML.replace(/韓国/g,'朝鮮');"
     });
   });
 
