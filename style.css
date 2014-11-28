@@ -1,8 +1,7 @@
 p {
-  font-weight: bold;
-  font-size: 150px;
+  font-size: 200px;
   color: #f00;
-  font-weight: bold;
+  background-color: #00f;
 }
 canvas {
   background: #fff;
