@@ -1,3 +1,8 @@
+###
+HTML文書から複数行のAAを検出
+@param document
+@return elementの配列
+###
 aaDetect = (doc)->
 
 	pres = doc.body.getElementsByTagName("pre");

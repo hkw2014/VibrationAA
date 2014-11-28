@@ -1,3 +1,10 @@
+
+/*
+HTML文書から複数行のAAを検出
+@param document
+@return elementの配列
+ */
+
 (function() {
   var aaDetect, main, strBytes, strMatches;
 
