@@ -10,10 +10,11 @@
       elem = pres[_i];
       console.log(i);
       totalBytes = strBytes(elem.innerText);
-      console.log('Bytes:' + totalBytes);
-      halfSpaces = strMatches(elem.innerText, " ");
-      fullSpaces = strMatches(elem.innerText, "　");
-      console.log(totalBytes.toString() + ',' + halfSpaces.toString() + ',' + fullSpaces.toString());
+      console.log("Bytes: " + totalBytes);
+      halfSpaces = strMatches(elem.innerText, ' ');
+      console.log('半角スペース' + halfSpaces);
+      fullSpaces = strMatches(elem.innerText, '　');
+      console.log('全角スペース' + fullSpaces);
       if ((halfSpaces + fullSpaces * 2) / totalBytes >= 0.1) {
         elems.push(elem);
         console.log("ADD");
@@ -34,22 +35,21 @@
         r += 2;
       }
     }
+    console.log('r:' + r);
     return r;
   };
 
   strMatches = function(str, para) {
-    var c, i, r, _i, _ref, _results;
+    var c, i, pCode, r, _i, _ref;
     r = 0;
-    _results = [];
+    pCode = para.charCodeAt(0);
     for (i = _i = 0, _ref = str.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
       c = str.charCodeAt(i);
-      if (c === para) {
-        _results.push(r += 1);
-      } else {
-        _results.push(void 0);
+      if (c === pCode) {
+        r += 1;
       }
     }
-    return _results;
+    return r;
   };
 
   main = function() {
