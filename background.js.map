@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "",
+  "sourceRoot": "",
+  "sources": [
+    "background.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;AAAA,EAAA,MAAM,CAAC,aAAa,CAAC,SAAS,CAAC,WAA/B,CAA2C,SAAA,GAAA;AAC1C,IAAA,KAAA,CAAM,UAAN,CAAA,CAAA;WAIA,MAAM,CAAC,IAAI,CAAC,aAAZ,CAA0B,IAA1B,EAAgC;AAAA,MAAC,IAAA,EAAK,UAAN;KAAhC,EAL0C;EAAA,CAA3C,CAAA,CAAA;AAAA"
+}
