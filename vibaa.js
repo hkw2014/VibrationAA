@@ -1,27 +1,30 @@
 (function() {
   var aaDetect, main, strBytes, strMatches;
 
-  aaDetect = function() {
-    var elem, elems, fullSpaces, halfSpaces, i, pres, totalBytes, _i, _len;
-    pres = document.body.getElementsByTagName("pre");
+  aaDetect = function(doc) {
+    var elem, elems, fullSpaces, halfSpaces, i, pres, spaceRate, totalBytes, _i, _len;
+    pres = doc.body.getElementsByTagName("pre");
     elems = [];
     i = 0;
     for (_i = 0, _len = pres.length; _i < _len; _i++) {
       elem = pres[_i];
       console.log(i);
+      console.log(elem.innerText);
       totalBytes = strBytes(elem.innerText);
       console.log("Bytes: " + totalBytes);
       halfSpaces = strMatches(elem.innerText, ' ');
       console.log('半角スペース' + halfSpaces);
       fullSpaces = strMatches(elem.innerText, '　');
       console.log('全角スペース' + fullSpaces);
-      if ((halfSpaces + fullSpaces * 2) / totalBytes >= 0.1) {
+      spaceRate = (halfSpaces + fullSpaces * 2) / totalBytes;
+      console.log("スペース率: " + (spaceRate * 100) + " %");
+      if (spaceRate >= 0.1) {
         elems.push(elem);
         console.log("ADD");
       }
       i += 1;
     }
-    return console.log(elems);
+    return elems;
   };
 
   strBytes = function(str) {
@@ -35,7 +38,6 @@
         r += 2;
       }
     }
-    console.log('r:' + r);
     return r;
   };
 
@@ -54,7 +56,8 @@
 
   main = function() {
     var elems;
-    elems = aaDetect();
+    elems = aaDetect(document);
+    console.log(elems);
     return console.log("fin");
   };
 
