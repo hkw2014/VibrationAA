@@ -1,23 +1,30 @@
 aaDetect =->
-	alert "vibaa"
-	console.log "vibaa!!"
+	#alert "vibaa"
+	#console.log "vibaa!!"
 
-	elems = document.body.getElementsByTagName("pre");
+	pres = document.body.getElementsByTagName("pre");
+
+	elems = []
 
 	i = 0
-	console.log "now"
-	for elem in elems
+	#console.log "now"
+	for elem in pres
 		# ...
 		console.log i
 		
-		totalBytes = strBytes elem.innerText
-		console.log totalBytes
-		halfSpaces = strMatches elem.innerText " "
-		fullSpaces = strMatches elem.innerText "　"
-		console.log totalBytes + "," + halfSpaces + "," + fullSpaces
+		totalBytes = strBytes(elem.innerText)
+		console.log 'Bytes:' + totalBytes
+		halfSpaces = strMatches(elem.innerText ," ")
+		fullSpaces = strMatches(elem.innerText ,"　")
+		console.log totalBytes.toString() + ',' + halfSpaces.toString() + ',' + fullSpaces.toString()
+
+		if (halfSpaces + fullSpaces*2) / totalBytes >= 0.1
+			elems.push(elem)
+			console.log "ADD"
+
 		i+=1
 
-	elems
+	console.log elems
 		
 
 strBytes = (str) ->
@@ -34,13 +41,14 @@ strBytes = (str) ->
         else 
             r += 2 
 
+     r
         #console.log r
 
          
 strMatches =(str,para) ->
-	console.log "startMatches"
+	#console.log "startMatches"
 	r = 0
-	for i in [o..(str.length-1)]
+	for i in [0..(str.length-1)]
 		c = str.charCodeAt i
 		if c is para
 			r += 1
