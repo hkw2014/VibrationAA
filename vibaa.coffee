@@ -1,6 +1,4 @@
 aaDetect = (doc)->
-	#alert "vibaa"
-	#console.log "vibaa!!"
 
 	pres = doc.body.getElementsByTagName("pre");
 
@@ -18,8 +16,6 @@ aaDetect = (doc)->
 		console.log '半角スペース' + halfSpaces
 		fullSpaces = strMatches(elem.innerText ,'　')
 		console.log '全角スペース' + fullSpaces
-		#console.log totalBytes.toString() + ',' + halfSpaces.toString() + ',' + fullSpaces.toString()
-
 		spaceRate = (halfSpaces + fullSpaces*2) / totalBytes
 		console.log "スペース率: #{spaceRate*100} %" 
 		if spaceRate >= 0.1
@@ -31,7 +27,11 @@ aaDetect = (doc)->
 	
 	return elems
 		
-
+###
+文字バイト数をカウント（全角:2バイト,半角:1バイト）
+@param 文字列
+@return 総バイト数
+###
 strBytes = (str) ->
 
 	#str = elem.innerText
@@ -49,7 +49,12 @@ strBytes = (str) ->
 	
 	return r
 
-         
+###
+文字列に指定した文字がどのくらい含まれるのかをカウント
+@param 文字列
+@param 指定した文字(1文字目の文字をカウント)
+@return 指定した文字が含まれる数	
+###    
 strMatches =(str,para) ->
 	#console.log "startMatches"
 	r = 0

@@ -27,6 +27,13 @@
     return elems;
   };
 
+
+  /*
+  文字バイト数をカウント（全角:2バイト,半角:1バイト）
+  @param 文字列
+  @return 総バイト数
+   */
+
   strBytes = function(str) {
     var c, i, r, _i, _ref;
     r = 0;
@@ -40,6 +47,14 @@
     }
     return r;
   };
+
+
+  /*
+  文字列に指定した文字がどのくらい含まれるのかをカウント
+  @param 文字列
+  @param 指定した文字(1文字目の文字をカウント)
+  @return 指定した文字が含まれる数
+   */
 
   strMatches = function(str, para) {
     var c, i, pCode, r, _i, _ref;
