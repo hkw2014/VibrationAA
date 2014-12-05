@@ -1,0 +1,35 @@
+doctype html
+html
+  head
+    title AA
+    meta(charset="UTF-8")
+    link(rel="stylesheet" type="text/javascript" href="style.css")
+    script(src="background.js")
+    script(src="jquerry.jrumble.1.3.js")
+    script(type="text/javascript")
+
+  body
+
+    ('#buruburu').jrumble ({
+        $ready ->
+            rangeX: 2, //ブルブルX
+            rangeY: 2, //ブルブルY
+            rangeRot: 3, //ブルブル角度
+            rumbleSpeed: 10,//ブルブル速度
+            rumbleEvent: 'hover' //イベント（hover、click、mousedown、constant）
+    });
+
+    p えいっ
+
+    id = 'p.buruburu' えいっ(`・ω・´)つ
+
+
+    $('#demo1').jrumble();
+
+    $('#demo1').ready(function(){
+        $(this).trigger('startRumble');
+        }, function(){
+        $(this).trigger('stopRumble');
+    })
+
+    <div id="demo1" style="padding:20px;background-color:#00FFFF;">ここが震えます。</div>
