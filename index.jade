@@ -3,33 +3,35 @@ html
   head
     title AA
     meta(charset="UTF-8")
-    link(rel="stylesheet" type="text/javascript" href="style.css")
-    script(src="background.js")
-    script(src="jquerry.jrumble.1.3.js")
-    script(type="text/javascript")
+    link(rel="stylesheet" type="text/stylesheet" href="style.css")
+    script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript")
+    script(src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript")
 
-  body
+    script(src="background.js" type="text/javascript")
+    script(src="./jquerry.jrumble.1.3.js" type="text/javascript")
 
-    ('#buruburu').jrumble ({
-        $ready ->
-            rangeX: 2, //ブルブルX
-            rangeY: 2, //ブルブルY
-            rangeRot: 3, //ブルブル角度
-            rumbleSpeed: 10,//ブルブル速度
-            rumbleEvent: 'hover' //イベント（hover、click、mousedown、constant）
-    });
-
-    p えいっ
-
-    id = 'p.buruburu' えいっ(`・ω・´)つ
-
-
-    $('#demo1').jrumble();
-
-    $('#demo1').ready(function(){
+    script(src='./jrumble.1.3.js' type='text/javascript')
+    script(type='text/javascript').
+      $(function() {
+        $('.abcd').jrumble({
+        x: 2, //ブルブルX
+        y: 2, //ブルブルY
+        rotation: 3, //ブルブル角度
+    
+        });
+      $('.abcd').hover(function(){
         $(this).trigger('startRumble');
         }, function(){
         $(this).trigger('stopRumble');
-    })
+       });
+      });
 
-    <div id="demo1" style="padding:20px;background-color:#00FFFF;">ここが震えます。</div>
+  body
+
+
+    p(class='abcd') えいっ
+
+    p(class='abcd') えいっ(`・ω・´)つ
+
+
+
