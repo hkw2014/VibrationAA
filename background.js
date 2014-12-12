@@ -6,5 +6,3 @@
   });
 
 }).call(this);
-
- //# sourceMappingURL=background.js.map
