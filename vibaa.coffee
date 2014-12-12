@@ -43,6 +43,84 @@ aaDetect = (doc)->
 	return elems
 		
 ###
+DIVでブロック分けしたDOMを取得
+###
+getBlock = (elem) ->
+	telem = elem.cloneNode true
+	t2elem = elem.cloneNode true
+	c_nodes = t2elem.childNodes
+	#console.log 'depth:' + depth
+	res = elem.cloneNode false
+	telem = elem.cloneNode true
+
+	console.log c_nodes
+	for i in c_nodes
+		# ...
+		console.log i
+
+	n = 0
+	brCount=0
+	tmp = document.createElement 'div'
+	#res =  [tmp]
+	for g in c_nodes
+		# ...
+		console.log '---今から処理する要素---'
+		console.log n
+		console.log g
+		console.log 'nodeName=' + g.nodeName	
+		console.log 'g=' + g.nodeValue
+		console.log tmp
+		console.log '------'
+
+		
+		if ((g.nodeName is '#text') or (g.nodeName is 'BR')) is false
+		#if (g.nodeName is '#text')is false
+			
+			console.log g
+			res.appendChild (tmp.cloneNode true)
+
+			tmp = document.createElement 'div'
+
+			if g.tagName is 'SCRIPT' or g.tagName is 'PRE'
+				res.appendChild g.cloneNode true
+			else
+				#res.appendChild (getBlock (g.cloneNode true),depth+1).cloneNode(true)
+				res.appendChild (getBlock (g.cloneNode true)).cloneNode(true)
+
+			tmp = document.createElement 'div'
+
+		else 
+			console.log g + 'in else'
+			console.log 'brCount : ' + brCount
+			if g.tagName isnt 'BR'
+				if brCount > 1
+					
+					res.appendChild tmp.cloneNode true
+					tmp = document.createElement 'div'
+					tmp.appendChild g.cloneNode true
+
+				else
+					tmp.appendChild g.cloneNode true
+
+				brCount = 0
+				
+
+
+			else if g.tagName is 'BR'
+
+				brCount++
+				tmp.appendChild g.cloneNode true
+
+		n++
+
+	res.appendChild tmp.cloneNode true
+
+	console.log 'getBlock結果'
+	console.log res
+
+	return res
+
+###
 文字バイト数をカウント（全角:2バイト,半角:1バイト）
 @param 文字列
 @return 総バイト数
@@ -90,12 +168,18 @@ main =->
 	console.log elems
 	for e in elems
 		# ...
+		oTxt = "<div class='vibrumble'>" + e.outerHTML + "</div>"
+		e.outerHTML = oTxt
+		console.log oTxt
+		###
 		if e.hasAttribute('class') is false
 			e.setAttribute('class','vibrumble')
 		else
 			cls_Attr = e.getAttribute('class')
 			e.setAttribute('class',cls_Attr + ' vibrumble')
+		###
 
+	console.log "要素追加開始"
 	scp1 = document.createElement 'link'
 	scp1.setAttribute('href',"http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css")
 	scp1.setAttribute('rel','stylesheet')
@@ -112,6 +196,7 @@ main =->
 	scp3.setAttribute('type','text/javascript')
 	document.head.appendChild scp3
 		
+	console.log "今からjRumble挿入"
 	scp4 = document.createElement 'script'
 	#scp4.setAttribute('src',"./js/jquery.jrumble.1.3.js")
 	scp4.setAttribute('type','text/javascript')
@@ -245,25 +330,25 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 """
 	document.head.appendChild scp4
 
+	console.log "kjk"
+
 	scp5 = document.createElement 'script'
-	#scp4.setAttribute('src',"./js/jquery.jrumble.1.3.js")
 	scp5.setAttribute('type','text/javascript')
 	scp5.innerHTML = '''
-
-	    $('.vibrumble').jrumble({
-        x: 2,
-        y: 2,
-        rotation: 1
-    });
-    $('.vibrumble').hover(function(){
+      $(function() {
+        $('.vibrumble').jrumble({
+        x: 2, //ブルブルX
+        y: 2, //ブルブルY
+        rotation: 3, //ブルブル角度
+        });
+      $('.vibrumble').hover(function(){
         $(this).trigger('startRumble');
-    }, function(){
+        }, function(){
         $(this).trigger('stopRumble');
-    });
-});
+       });
+      });
+    '''
 
-
-	'''
 	document.head.appendChild scp5
 
 	console.log "fin"
