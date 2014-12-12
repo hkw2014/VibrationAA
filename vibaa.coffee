@@ -6,14 +6,30 @@ HTML文書から複数行のAAを検出
 aaDetect = (doc)->
 
 	tmpEles = []
-	pres = doc.body.getElementsByTagName("pre")
+
+	doc.body = getBlock doc.body
+
 	dds = doc.body.getElementsByTagName("dd")
+	
+	for i in dds
+		# ...
+		i.parentNode.replaceChild(getBlock(i),i)
+
+
+	divs = doc.body.getElementsByClassName 'blocked'
+	pres = doc.body.getElementsByTagName("pre")
+	
+
+
 
 	for j in pres
 		tmpEles.push(j)
 
-	for j in dds
+	for j in divs
 		tmpEles.push(j)
+
+		
+		
 
 	elems = []
 
@@ -44,6 +60,8 @@ aaDetect = (doc)->
 		
 ###
 DIVでブロック分けしたDOMを取得
+@param element(ex. document.body)
+@return 行がブロック分けされたDOM
 ###
 getBlock = (elem) ->
 	telem = elem.cloneNode true
@@ -61,6 +79,7 @@ getBlock = (elem) ->
 	n = 0
 	brCount=0
 	tmp = document.createElement 'div'
+	tmp.setAttribute 'class', 'blocked'
 	#res =  [tmp]
 	for g in c_nodes
 		# ...
@@ -80,14 +99,16 @@ getBlock = (elem) ->
 			res.appendChild (tmp.cloneNode true)
 
 			tmp = document.createElement 'div'
+			tmp.setAttribute 'class', 'blocked'
 
-			if g.tagName is 'SCRIPT' or g.tagName is 'PRE'
+			if g.tagName is 'SCRIPT' or g.tagName is 'PRE' or g.nodeName is '#comment' or g.tagName is 'SPAN'
 				res.appendChild g.cloneNode true
 			else
 				#res.appendChild (getBlock (g.cloneNode true),depth+1).cloneNode(true)
 				res.appendChild (getBlock (g.cloneNode true)).cloneNode(true)
 
 			tmp = document.createElement 'div'
+			tmp.setAttribute 'class', 'blocked'
 
 		else 
 			console.log g + 'in else'
@@ -97,6 +118,7 @@ getBlock = (elem) ->
 					
 					res.appendChild tmp.cloneNode true
 					tmp = document.createElement 'div'
+					tmp.setAttribute 'class', 'blocked'
 					tmp.appendChild g.cloneNode true
 
 				else
@@ -168,6 +190,7 @@ main =->
 	console.log elems
 	for e in elems
 		# ...
+		console.log e
 		oTxt = "<div class='vibrumble'>" + e.outerHTML + "</div>"
 		e.outerHTML = oTxt
 		console.log oTxt

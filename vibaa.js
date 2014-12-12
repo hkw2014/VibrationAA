@@ -9,22 +9,28 @@ HTML文書から複数行のAAを検出
   var aaDetect, getBlock, main, strBytes, strMatches;
 
   aaDetect = function(doc) {
-    var dds, elem, elems, fullSpaces, halfSpaces, i, j, pres, spaceRate, tmpEles, totalBytes, _i, _j, _k, _len, _len1, _len2;
+    var dds, divs, elem, elems, fullSpaces, halfSpaces, i, j, pres, spaceRate, tmpEles, totalBytes, _i, _j, _k, _l, _len, _len1, _len2, _len3;
     tmpEles = [];
-    pres = doc.body.getElementsByTagName("pre");
+    doc.body = getBlock(doc.body);
     dds = doc.body.getElementsByTagName("dd");
-    for (_i = 0, _len = pres.length; _i < _len; _i++) {
-      j = pres[_i];
+    for (_i = 0, _len = dds.length; _i < _len; _i++) {
+      i = dds[_i];
+      i.parentNode.replaceChild(getBlock(i), i);
+    }
+    divs = doc.body.getElementsByClassName('blocked');
+    pres = doc.body.getElementsByTagName("pre");
+    for (_j = 0, _len1 = pres.length; _j < _len1; _j++) {
+      j = pres[_j];
       tmpEles.push(j);
     }
-    for (_j = 0, _len1 = dds.length; _j < _len1; _j++) {
-      j = dds[_j];
+    for (_k = 0, _len2 = divs.length; _k < _len2; _k++) {
+      j = divs[_k];
       tmpEles.push(j);
     }
     elems = [];
     i = 0;
-    for (_k = 0, _len2 = tmpEles.length; _k < _len2; _k++) {
-      elem = tmpEles[_k];
+    for (_l = 0, _len3 = tmpEles.length; _l < _len3; _l++) {
+      elem = tmpEles[_l];
       console.log(i);
       console.log(elem.innerText);
       totalBytes = strBytes(elem.innerText);
@@ -47,6 +53,8 @@ HTML文書から複数行のAAを検出
 
   /*
   DIVでブロック分けしたDOMを取得
+  @param element(ex. document.body)
+  @return 行がブロック分けされたDOM
    */
 
   getBlock = function(elem) {
@@ -64,6 +72,7 @@ HTML文書から複数行のAAを検出
     n = 0;
     brCount = 0;
     tmp = document.createElement('div');
+    tmp.setAttribute('class', 'blocked');
     for (_j = 0, _len1 = c_nodes.length; _j < _len1; _j++) {
       g = c_nodes[_j];
       console.log('---今から処理する要素---');
@@ -77,12 +86,14 @@ HTML文書から複数行のAAを検出
         console.log(g);
         res.appendChild(tmp.cloneNode(true));
         tmp = document.createElement('div');
-        if (g.tagName === 'SCRIPT' || g.tagName === 'PRE') {
+        tmp.setAttribute('class', 'blocked');
+        if (g.tagName === 'SCRIPT' || g.tagName === 'PRE' || g.nodeName === '#comment' || g.tagName === 'SPAN') {
           res.appendChild(g.cloneNode(true));
         } else {
           res.appendChild((getBlock(g.cloneNode(true))).cloneNode(true));
         }
         tmp = document.createElement('div');
+        tmp.setAttribute('class', 'blocked');
       } else {
         console.log(g + 'in else');
         console.log('brCount : ' + brCount);
@@ -90,6 +101,7 @@ HTML文書から複数行のAAを検出
           if (brCount > 1) {
             res.appendChild(tmp.cloneNode(true));
             tmp = document.createElement('div');
+            tmp.setAttribute('class', 'blocked');
             tmp.appendChild(g.cloneNode(true));
           } else {
             tmp.appendChild(g.cloneNode(true));
@@ -156,6 +168,7 @@ HTML文書から複数行のAAを検出
     console.log(elems);
     for (_i = 0, _len = elems.length; _i < _len; _i++) {
       e = elems[_i];
+      console.log(e);
       oTxt = "<div class='vibrumble'>" + e.outerHTML + "</div>";
       e.outerHTML = oTxt;
       console.log(oTxt);
